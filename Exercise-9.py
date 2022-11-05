@@ -1,5 +1,5 @@
 # 1 The basic info about the car.
-
+import random
 from random import random
 
 
