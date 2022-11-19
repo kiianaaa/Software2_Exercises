@@ -21,6 +21,9 @@ try:
     response = requests.get(request)
     if response.status_code == 200:
         json_response = response.json()
-
+        temp = (json_response["main"]["temp"])
+        tozih = json_response["weather"][0]["description"]
+        print(
+            f"Current weather in the city {city.capitalize()} is: {temp}°C and with a {tozih}.")
     except requests.exceptions.RequestException as e:
         print("We countered an error. Try again.")
