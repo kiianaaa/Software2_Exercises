@@ -44,19 +44,25 @@ if __name__ == '__main__':
 app = Flask(__name__)
 
 
-@app.route('/airport/<ICAO>')
+@app.route('/airport/<string:icao>')
 def airport(icao):
-    sql = "SELECT name, municipality from airport where ident = '" + icao + "'"
+    sql = "SELECT name, municipality FROM airport"
+    sql += " WHERE ident='" + icao + "'"
     cursor = connection.cursor()
     cursor.execute(sql)
     result = cursor.fetchall()
-    cursor.close()
+    if cursor.rowcount > 0:
+        for row in result:
+            name = row[0]
+            location = row[1]
+
     response = {
-        "ICAO": icao,
-        "Name:": result[0][0],
-        "Location": result[0][1]
+        "Airport" : name,
+        "Location" : location,
+        "ICAO" : ICAO
     }
     return response
+    
 
 if __name__ == '__main__':
     app.run(use_reloader=True, host='127.0.0.1', port=5000)
